@@ -4,7 +4,6 @@ import { AuditoriaEnvio } from "../entities/AuditoriaEnvio.js";
 export class AuditoriaEnvioRepository {
     private repository = AppDataSource.getRepository(AuditoriaEnvio);
 
-    // Solo lectura: los registros los inserta el trigger after_update_envio_costo
     async findAll(): Promise<AuditoriaEnvio[]> {
         return await this.repository.find({
             order: { fechaModificacion: "DESC", id: "DESC" }
