@@ -48,30 +48,32 @@ DELIMITER //
 
 CREATE PROCEDURE sp_obtener_hoja_ruta_envio(IN p_envio_id INT)
 BEGIN
-    SELECT e.id as id_envio, 
-    c.nombres AS nombre_remitente, 
-    c.apellidos AS apellidos_remitente, 
-    (SELECT nombres FROM clientes WHERE id = e.id_destinatario) AS nombre_destinatario, 
-    (SELECT apellidos FROM clientes WHERE id = e.id_destinatario) AS apellidos_destinatario, 
-    hr.fecha,
-    a.id AS id_almacen_actual,
-    a.nombre AS almacen_actual,
-    hr.status_evento,
-    hr.observaciones,
-    p.id AS id_paquete,
-    p.contenido,
-    p.peso,
-    p.alto,
-    p.largo,
-    p.ancho
-    FROM historial_rastreo hr
-    JOIN paquete_almacen pa ON hr.id_paquete_almacen = pa.id
-    JOIN paquetes p ON pa.id_paquete = p.id
-    JOIN almacenes a ON pa.id_almacen = a.id
-    JOIN envios e ON hr.id_envio = e.id
-    JOIN clientes c ON e.id_remitente = c.id
+    SELECT e.id AS id_envio,
+        e.status_global,
+        CONCAT(rem.nombres, ' ', rem.apellidos) AS remitente,
+        CONCAT(des.nombres, ' ', des.apellidos) AS destinatario,
+        p.id AS id_paquete,
+        p.contenido,
+        p.peso,
+        p.alto,
+        p.largo,
+        p.ancho,
+        a.nombre AS almacen_actual
+    FROM envios e
+    JOIN clientes rem ON e.id_remitente = rem.id
+    JOIN clientes des ON e.id_destinatario = des.id
+    LEFT JOIN paquetes p ON p.id_envio = e.id
+    LEFT JOIN almacenes a ON p.id_almacen = a.id
     WHERE e.id = p_envio_id
-    ORDER BY hr.fecha, p.id;
+    ORDER BY p.id;
+
+    SELECT hr.fecha,
+        hr.ubicacion_actual,
+        hr.status_evento,
+        hr.observaciones
+    FROM historial_rastreo hr
+    WHERE hr.id_envio = p_envio_id
+    ORDER BY hr.fecha, hr.id;
 END //
 
 DELIMITER ;
