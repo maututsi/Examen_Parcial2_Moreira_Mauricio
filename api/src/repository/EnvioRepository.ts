@@ -1,5 +1,6 @@
 import { AppDataSource } from "../config/data-source.js";
-import { Envio, StatusEnvio } from "../entities/Envio.js";
+import { Envio } from "../entities/Envio.js";
+import { StatusEnvio } from "../entities/StatusEnvio.js";
 import { Paquete } from "../entities/Paquete.js";
 
 export class EnvioRepository {

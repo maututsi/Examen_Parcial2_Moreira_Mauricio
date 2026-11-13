@@ -3,13 +3,7 @@ import { Cliente } from "./Cliente.js";
 import { Paquete } from "./Paquete.js";
 import { HistorialRastreo } from "./HistorialRastreo.js";
 import { AuditoriaEnvio } from "./AuditoriaEnvio.js";
-
-export enum StatusEnvio {
-    REGISTRADO = "REGISTRADO",
-    EN_TRANSITO = "EN_TRANSITO",
-    ENTREGADO = "ENTREGADO",
-    CANCELADO = "CANCELADO",
-}
+import { StatusEnvio } from "./StatusEnvio.js";
 
 @Entity({ name: "envios" })
 export class Envio {

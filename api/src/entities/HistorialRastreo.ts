@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
-import { Envio, StatusEnvio } from "./Envio.js";
+import { Envio } from "./Envio.js";
+import { StatusEnvio } from "./StatusEnvio.js";
 
 @Entity({ name: "historial_rastreo" })
 export class HistorialRastreo {

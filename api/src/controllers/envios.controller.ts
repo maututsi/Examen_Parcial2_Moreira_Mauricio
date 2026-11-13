@@ -3,7 +3,7 @@ import { envioRepository } from "../repository/EnvioRepository.js";
 import { clienteRepository } from "../repository/ClienteRepository.js";
 import { almacenRepository } from "../repository/AlmacenRepository.js";
 import { historialRastreoRepository } from "../repository/HistorialRastreoRepository.js";
-import { StatusEnvio } from "../entities/Envio.js";
+import { StatusEnvio } from "../entities/StatusEnvio.js";
 import { getTriggerError } from "../dbErrors.js";
 
 export const getEnvios = async (req: Request, res: Response) => {
