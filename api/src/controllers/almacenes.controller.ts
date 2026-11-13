@@ -4,6 +4,31 @@ import { envioRepository } from "../repository/EnvioRepository.js";
 import { paqueteRepository } from "../repository/PaqueteRepository.js";
 import { getTriggerError } from "../dbErrors.js";
 
+export const getAlmacenes = async (req: Request, res: Response) => {
+    try {
+        const almacenes = await almacenRepository.findAll();
+        return res.status(200).json({ almacenes });
+    } catch (e) {
+        return res.status(500).json({ message: "No se pudieron recuperar los almacenes", status: 500 });
+    }
+}
+
+export const getAlmacenById = async (req: Request, res: Response) => {
+    try {
+        const id = Number(req.params.id);
+        if (!Number.isInteger(id)) {
+            return res.status(400).json({ message: "Id de almacén inválido", status: 400 });
+        }
+        const almacen = await almacenRepository.findByIdConPaquetes(id);
+        if (!almacen) {
+            return res.status(404).json({ message: "Almacén no encontrado", status: 404 });
+        }
+        return res.status(200).json({ almacen });
+    } catch (e) {
+        return res.status(500).json({ message: "No se pudo recuperar el almacén", status: 500 });
+    }
+}
+
 export const addPaqueteToAlmacen = async (req: Request, res: Response) => {
     try {
         const idAlmacen = Number(req.params.id);

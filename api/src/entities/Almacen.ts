@@ -17,4 +17,7 @@ export class Almacen {
 
     @OneToMany(() => Paquete, (paquete) => paquete.almacen)
     paquetes?: Relation<Paquete[]>;
+
+    // No es columna: la llena loadRelationCountAndMap con el número de paquetes dentro
+    ocupacion?: number;
 }
